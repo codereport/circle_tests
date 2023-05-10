@@ -35,6 +35,7 @@ FetchContent_MakeAvailable(range-v3)
 
 # set(CMAKE_CXX_COMPILER "/opt/gcc-latest/bin/g++")
 set(CMAKE_CXX_COMPILER "/home/cph/circle/circle")
+set(CMAKE_BUILD_RPATH "/home/cph/gcc-13.1.0/lib64/")
 
 project(test
   LANGUAGES CXX # CUDA
@@ -42,7 +43,7 @@ project(test
 )
 
 add_executable(test filter_out_html_tags.cpp)
-target_compile_options(test PUBLIC -std=c++2b -Wl,-rpath,/home/cph/gcc-13.1.0/lib64/ -gcc-toolchain ~/gcc-13.1.0 --verbose)
+target_compile_options(test PUBLIC -std=c++2b -gcc-toolchain=/home/cph/gcc-13.1.0)
 
 target_link_libraries(test
   PRIVATE range-v3
