@@ -21,19 +21,18 @@
 using namespace std::views;
 namespace rv = ranges::views;
 
+auto scan_left(auto rng, auto init, auto op) {
+    return transform(rng, [first = true, acc = init, op](auto e) mutable {
+            if (first) first = false; 
+            else acc = op(acc, e);
+            return acc;
+        });
+}
 
 auto filter_out_html_tags(std::string_view sv) {
     return sv 
-        |> transform($, [](auto e) { return e == '<' or e == '>'; }) 
-        |> zip_transform(std::logical_or{}, $, transform($, [first = true, eq = false](auto e) mutable {
-            if (first) {
-                eq = e;
-                first = false;
-            } else {
-                eq = eq != e;
-            }
-            return eq;
-        }))
+        |> transform($, [](auto e) { return e == '<' or e == '>'; })
+        |> zip_transform(std::logical_or{}, $, scan_left($, true, std::not_equal_to{}))
         |> zip($, sv)
         |> filter($, [](auto t) { return not std::get<0>(t); })
         |> transform($, [](auto t) { return std::get<1>(t); });
@@ -75,22 +74,22 @@ auto filter_out_html_tags(std::string_view sv) {
 //         |> ranges::to<std::string>($);
 // }
 
-// auto filter_out_html_tags4(std::string_view sv) {
-//     return sv 
-//         |> transform($, [](auto e) { return e == '<' or e == '>'; }) 
-//         |> zip_transform(std::logical_or{}, $, $ |> transform([first = true, eq = false](auto e) mutable {
-//             if (first) {
-//                 eq = e;
-//                 first = false;
-//             } else {
-//                 eq = eq != e;
-//             }
-//             return eq;
-//         }))
-//         |> zip($, sv)
-//         |> filter($, [](auto t) { return not std::get<0>(t); })
-//         |> transform($, [](auto t) { return std::get<1>(t); });
-// }
+auto filter_out_html_tags4(std::string_view sv) {
+    return sv 
+        |> transform($, [](auto e) { return e == '<' or e == '>'; }) 
+        |> zip_transform(std::logical_or{}, $, $ |> transform($, [first = true, eq = false](auto e) mutable {
+            if (first) {
+                eq = e;
+                first = false;
+            } else {
+                eq = eq != e;
+            }
+            return eq;
+        }))
+        |> zip($, sv)
+        |> filter($, [](auto t) { return not std::get<0>(t); })
+        |> transform($, [](auto t) { return std::get<1>(t); });
+}
 
 // auto filter_out_html_tags5(std::string_view sv) {
 //     return sv 
@@ -102,10 +101,10 @@ auto filter_out_html_tags(std::string_view sv) {
 // }
 
 int main() {
-    fmt::print("{}\n", filter_out_html_tags ("<div>Hello <b>C++North!</b></div>"));
+    fmt::print("{}\n", filter_out_html_tags ("<div>Hello <b>C++North!</b></div>")); // working
     // fmt::print("{}\n", filter_out_html_tags2("<div>Hello <b>C++North!</b></div>"));
     // fmt::print("{}\n", filter_out_html_tags3("<div>Hello <b>C++North!</b></div>"));
-    // fmt::print("{}\n", filter_out_html_tags4("<div>Hello <b>C++North!</b></div>"));
+    fmt::print("{}\n", filter_out_html_tags4("<div>Hello <b>C++North!</b></div>")); // working
     // fmt::print("{}\n", filter_out_html_tags5("<div>Hello <b>C++North!</b></div>"));
 
     return 0;
