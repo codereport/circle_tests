@@ -42,7 +42,7 @@ project(test
   VERSION 1.0.0
 )
 
-add_executable(test mco.cpp)
+add_executable(test rain_water.cpp)
 target_compile_options(test PUBLIC -std=c++2b -gcc-toolchain=/home/cph/gcc-13.1.0)
 
 target_link_libraries(test
