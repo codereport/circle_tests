@@ -67,21 +67,21 @@ auto filter_out_html_tags4(std::string_view sv) {
         |> values($);
 }
 
-// auto filter_out_html_tags5(std::string_view sv) {
-//     return sv 
-//         |> transform($, [](auto e) { return e == '<' or e == '>'; }) 
-//         |> zip_transform(std::logical_or{}, $, rv::partial_sum($, std::not_equal_to{}))
-//         |> zip($, sv)
-//         |> filter($, [](auto t) { return not std::get<0>(t); })
-//         |> transform($, [](auto t) { return std::get<1>(t); });
-// }
+auto filter_out_html_tags5(std::string_view sv) {
+    return sv 
+        |> transform($, [](auto e) { return e == '<' or e == '>'; }) 
+        |> zip_transform(std::logical_or{}, $, rv::partial_sum($, std::not_equal_to{}))
+        |> zip($, sv)
+        |> filter($, [](auto t) { return not std::get<0>(t); })
+        |> values();
+}
 
 int main() {
     fmt::print("{}\n", filter_out_html_tags ("<div>Hello <b>C++North!</b></div>")); // working
     fmt::print("{}\n", filter_out_html_tags2("<div>Hello <b>C++North!</b></div>")); // working
     fmt::print("{}\n", filter_out_html_tags3("<div>Hello <b>C++North!</b></div>")); // working
     fmt::print("{}\n", filter_out_html_tags4("<div>Hello <b>C++North!</b></div>")); // working
-    // fmt::print("{}\n", filter_out_html_tags5("<div>Hello <b>C++North!</b></div>"));
+    fmt::print("{}\n", filter_out_html_tags5("<div>Hello <b>C++North!</b></div>"));
 
     return 0;
 }
