@@ -35,7 +35,8 @@ auto filter_out_html_tags(std::string_view sv) {
         |> zip_transform(std::logical_or{}, $, scan_left($, true, std::not_equal_to{}))
         |> zip($, sv)
         |> filter($, [](auto t) { return not std::get<0>(t); })
-        |> values($);
+        |> values($)
+        |> ranges::to<std::string>($);
 }
 
 auto filter_out_html_tags2(std::string_view sv) {
@@ -45,29 +46,20 @@ auto filter_out_html_tags2(std::string_view sv) {
         |> zip($, sv)
         |> filter($, [](auto t) { return not std::get<0>(t); })
         |> values($)
-        | ranges::to<std::string>;
+        |> ranges::to<std::string>($);
 }
 
 auto filter_out_html_tags3(std::string_view sv) {
     return sv 
         |> transform($, [](auto e) { return e == '<' or e == '>'; }) 
-        |> zip_transform(std::logical_or{}, $, scan_left($, true, std::not_equal_to{}))
+        |> zip_transform(std::logical_or{}, $, $ |> scan_left($, true, std::not_equal_to{}))
         |> zip($, sv)
         |> filter($, [](auto t) { return not std::get<0>(t); })
         |> values($)
         |> ranges::to<std::string>($);
 }
 
-auto filter_out_html_tags4(std::string_view sv) {
-    return sv 
-        |> transform($, [](auto e) { return e == '<' or e == '>'; }) 
-        |> zip_transform(std::logical_or{}, $, $ |> scan_left($, true, std::not_equal_to{}))
-        |> zip($, sv)
-        |> filter($, [](auto t) { return not std::get<0>(t); })
-        |> values($);
-}
-
-// auto filter_out_html_tags5(std::string_view sv) {
+// auto filter_out_html_tags4(std::string_view sv) {
 //     return sv 
 //         |> transform($, [](auto e) { return e == '<' or e == '>'; }) 
 //         |> zip_transform(std::logical_or{}, $, rv::partial_sum($, std::not_equal_to{}))
