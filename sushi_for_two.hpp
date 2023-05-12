@@ -34,11 +34,3 @@ auto sushi_for_two(std::vector<int> sushi) {
            |> adjacent_transform<2>($, ufo::min{})  //
            |> std::ranges::max($) * 2;
 }
-
-auto main() -> int {
-    std::cout << sushi_for_two({2, 2, 2, 1, 1, 2, 2}) << '\n';        // 4
-    std::cout << sushi_for_two({1, 2, 1, 2, 1, 2}) << '\n';           // 2
-    std::cout << sushi_for_two({2, 2, 1, 1, 1, 2, 2, 2, 2}) << '\n';  // 6
-
-    return 0;
-}

@@ -19,7 +19,6 @@ endif()
 
 FetchContent_Declare(range-v3
   GIT_REPOSITORY https://github.com/ericniebler/range-v3
-  # GIT_TAG v0.12.0
 )
 
 FetchContent_GetProperties(range-v3)
@@ -33,17 +32,17 @@ FetchContent_MakeAvailable(range-v3)
 # ------------------------------------------------------------------------------
 
 
-# set(CMAKE_CXX_COMPILER "/opt/gcc-latest/bin/g++")
 set(CMAKE_CXX_COMPILER "/home/cph/circle/circle")
 set(CMAKE_BUILD_RPATH "/home/cph/gcc-13.1.0/lib64/")
 
 project(test
-  LANGUAGES CXX # CUDA
+  LANGUAGES CXX
   VERSION 1.0.0
 )
 
-add_executable(test filter_out_html_tags.cpp)
+add_executable(test main.cpp)
 target_compile_options(test PUBLIC -std=c++2b -gcc-toolchain=/home/cph/gcc-13.1.0)
+include_directories("/home/cph/circle/")
 
 target_link_libraries(test
   PRIVATE range-v3

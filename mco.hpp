@@ -23,11 +23,3 @@ auto mco2(std::vector<int> lst) {
         |> transform($, sum)
         |> std::ranges::max($);
 }
-
-auto main() -> int {
-
-    fmt::print("{}\n", mco({1, 0, 0, 0, 0, 1, 1, 1, 0, 1})); // 3
-    fmt::print("{}\n", mco2({1, 0, 0, 0, 0, 1, 1, 1, 0, 1})); // 3
-
-  return 0;
-}

@@ -75,13 +75,3 @@ auto filter_out_html_tags4(std::string_view sv) {
 //         |> filter($, [](auto t) { return not std::get<0>(t); })
 //         |> values();
 // }
-
-int main() {
-    fmt::print("{}\n", filter_out_html_tags ("<div>Hello <b>C++North!</b></div>")); // working
-    fmt::print("{}\n", filter_out_html_tags2("<div>Hello <b>C++North!</b></div>")); // working
-    fmt::print("{}\n", filter_out_html_tags3("<div>Hello <b>C++North!</b></div>")); // working
-    fmt::print("{}\n", filter_out_html_tags4("<div>Hello <b>C++North!</b></div>")); // working
-    // fmt::print("{}\n", filter_out_html_tags5("<div>Hello <b>C++North!</b></div>"));
-
-    return 0;
-}
