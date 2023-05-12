@@ -3,27 +3,7 @@
 #include <ranges>
 #include <vector>
 
-namespace ufo {
-// STRUCT TEMPLATE min
-template <class _Ty = void>
-struct min {
-    constexpr _Ty operator()(const _Ty& _Left, const _Ty& _Right) const {
-        return (std::min(_Left, _Right));
-    }
-};
-
-// STRUCT TEMPLATE SPECIALIZATION min
-template <>
-struct min<void> {
-    // transparent functor for operator*
-    typedef int is_transparent;
-    template <class _Ty1, class _Ty2>
-    constexpr auto operator()(_Ty1&& _Left, _Ty2&& _Right) const
-      -> decltype(std::min(static_cast<_Ty1&&>(_Left), static_cast<_Ty2&&>(_Right))) {
-        return (std::min(static_cast<_Ty1&&>(_Left), static_cast<_Ty2&&>(_Right)));
-    }
-};
-}  // namespace ufo
+#include <ufo.hpp>
 
 using namespace std::views;
 

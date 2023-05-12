@@ -27,8 +27,19 @@ if(NOT range-v3_POPULATED)
   add_subdirectory(${range-v3_SOURCE_DIR} ${range-v3_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
-FetchContent_MakeAvailable(range-v3)
+# --- Fetch ufo ------------------------------------------------------------
 
+FetchContent_Declare(ufo
+  GIT_REPOSITORY https://github.com/codereport/useful_function_objects.git
+)
+
+FetchContent_GetProperties(ufo)
+if(NOT ufo_POPULATED)
+  FetchContent_Populate(ufo)
+  add_subdirectory(${ufo_SOURCE_DIR} ${ufo_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
+
+FetchContent_MakeAvailable(ufo)
 # ------------------------------------------------------------------------------
 
 
@@ -43,6 +54,7 @@ project(test
 add_executable(test main.cpp)
 target_compile_options(test PUBLIC -std=c++2b -gcc-toolchain=/home/cph/gcc-13.1.0)
 include_directories("/home/cph/circle/")
+include_directories(${ufo_SOURCE_DIR})
 
 target_link_libraries(test
   PRIVATE range-v3
