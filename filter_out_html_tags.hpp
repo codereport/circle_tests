@@ -8,6 +8,10 @@
 #include <fmt/core.h>
 #include <fmt/ranges.h>
 
+#include <combinators.hpp>
+
+using namespace combinators;
+
 // auto filter_out_html_tags(std::string_view sv) {
 //     auto angle_bracket_mask = 
 //         sv | std::views::transform([](auto e) { return e == '<' or e == '>'; });
@@ -59,7 +63,17 @@ auto filter_out_html_tags3(std::string_view sv) {
         |> ranges::to<std::string>($);
 }
 
-// auto filter_out_html_tags4(std::string_view sv) {
+auto filter_out_html_tags4(std::string_view sv) {
+    return sv 
+        |> transform($, _phi(_eq('<'), _or_, _eq('>')))
+        |> zip_transform(_or_, $, scan_left($, true, _neq_))
+        |> zip($, sv)
+        |> filter($, _b(_not, _fst))
+        |> values($)
+        |> ranges::to<std::string>($);
+}
+
+// auto filter_out_html_tags5(std::string_view sv) {
 //     return sv 
 //         |> transform($, [](auto e) { return e == '<' or e == '>'; }) 
 //         |> zip_transform(std::logical_or{}, $, rv::partial_sum($, std::not_equal_to{}))

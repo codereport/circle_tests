@@ -39,7 +39,19 @@ if(NOT ufo_POPULATED)
   add_subdirectory(${ufo_SOURCE_DIR} ${ufo_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
-FetchContent_MakeAvailable(ufo)
+# --- Fetch blackbird ------------------------------------------------------------
+
+FetchContent_Declare(blackbird
+  GIT_REPOSITORY https://github.com/codereport/blackbird.git
+  GIT_TAG main
+)
+
+FetchContent_GetProperties(blackbird)
+if(NOT blackbird_POPULATED)
+  FetchContent_Populate(blackbird)
+  add_subdirectory(${blackbird_SOURCE_DIR} ${blackbird_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
+
 # ------------------------------------------------------------------------------
 
 
@@ -55,6 +67,7 @@ add_executable(test main.cpp)
 target_compile_options(test PUBLIC -std=c++2b -gcc-toolchain=/home/cph/gcc-13.1.0)
 include_directories("/home/cph/circle/")
 include_directories(${ufo_SOURCE_DIR})
+include_directories(${blackbird_SOURCE_DIR})
 
 target_link_libraries(test
   PRIVATE range-v3
