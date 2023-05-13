@@ -1,4 +1,3 @@
-
 #include <fmt/core.h>
 
 #include <filter_out_html_tags.hpp>
