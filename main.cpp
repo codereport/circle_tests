@@ -2,7 +2,7 @@
 
 #include <filter_out_html_tags.hpp>
 #include <mco.hpp>
-#include <sushi_for_two.hpp>
+#include <simplify_issue.hpp>
 
 int main() {
     fmt::print("{}\n", filter_out_html_tags("<div>Hello <b>Italian C++!</b></div>"));   // working
