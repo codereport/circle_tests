@@ -29,12 +29,8 @@ namespace view = ranges::views;
 //            |> std::ranges::max($) * 2;
 // }
 
-template <typename T>
-using vec = std::vector<T>;
-
 auto sushi_for_two(std::vector<int> sushi) {
-    auto op = [](auto a, auto b) { return std::min(a, b); };
-    return sushi                                                             //
+    return sushi                                                            //
            |> view::zip_with(_neq_, $, $ | view::drop(1))                   //
            |> view::zip($, view::iota(0))                                   //
            |> view::filter($, [](auto t) { return std::get<0>(t); })        //
@@ -42,6 +38,6 @@ auto sushi_for_two(std::vector<int> sushi) {
            |> view::transform($, _plus(1))                                  //
            |> view::concat(view::single(0), $, view::single(sushi.size()))  //
            |> view::zip_with(_sub_, $ | view::drop(1), $)                   //
-           |> view::zip_with(ufo::min{}, $, $ | view::drop(1));             //
-    //    |> std::ranges::max($) * 2;              //
+           |> view::zip_with(ufo::min{}, $, $ | view::drop(1))              //
+           |> std::ranges::max($) * 2;                                      //
 }
