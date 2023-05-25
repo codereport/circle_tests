@@ -27,18 +27,6 @@ if(NOT range-v3_POPULATED)
   add_subdirectory(${range-v3_SOURCE_DIR} ${range-v3_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
-# --- Fetch ufo ------------------------------------------------------------
-
-FetchContent_Declare(ufo
-  GIT_REPOSITORY https://github.com/codereport/useful_function_objects.git
-)
-
-FetchContent_GetProperties(ufo)
-if(NOT ufo_POPULATED)
-  FetchContent_Populate(ufo)
-  add_subdirectory(${ufo_SOURCE_DIR} ${ufo_BINARY_DIR} EXCLUDE_FROM_ALL)
-endif()
-
 # --- Fetch blackbird ------------------------------------------------------------
 
 FetchContent_Declare(blackbird
