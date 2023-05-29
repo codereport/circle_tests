@@ -1,4 +1,4 @@
-// Godbolt Link: https://godbolt.org/z/nYczzzj6K
+// Godbolt Link: https://godbolt.org/z/4qEoncaWT
 
 #include <algorithm>
 #include <ranges>
