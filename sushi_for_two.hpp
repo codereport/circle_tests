@@ -1,3 +1,5 @@
+// Godbolt Link: https://godbolt.org/z/nYczzzj6K
+
 #include <algorithm>
 #include <ranges>
 #include <vector>
