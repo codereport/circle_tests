@@ -6,15 +6,12 @@
 
 #include <combinators.hpp>
 
-#include <range/v3/range/conversion.hpp>
-#include <range/v3/view/all.hpp>
 #include <range/v3/view/concat.hpp>
 #include <range/v3/view/drop.hpp>
 #include <range/v3/view/filter.hpp>
 #include <range/v3/view/iota.hpp>
 #include <range/v3/view/map.hpp>
 #include <range/v3/view/single.hpp>
-#include <range/v3/view/take.hpp>
 #include <range/v3/view/zip.hpp>
 #include <range/v3/view/zip_with.hpp>
 
