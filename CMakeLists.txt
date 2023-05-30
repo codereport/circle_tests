@@ -43,7 +43,7 @@ endif()
 # ------------------------------------------------------------------------------
 
 
-set(CMAKE_CXX_COMPILER "/home/cph/circle/circle")
+set(CMAKE_CXX_COMPILER "/home/cph/circle_tests/circle")
 set(CMAKE_BUILD_RPATH "/home/cph/gcc-13.1.0/lib64/")
 
 project(test
@@ -53,7 +53,7 @@ project(test
 
 add_executable(test main.cpp)
 target_compile_options(test PUBLIC -std=c++2b -gcc-toolchain=/home/cph/gcc-13.1.0)
-include_directories("/home/cph/circle/")
+include_directories("/home/cph/circle_tests/")
 include_directories(${ufo_SOURCE_DIR})
 include_directories(${blackbird_SOURCE_DIR})
 
