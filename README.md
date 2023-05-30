@@ -1,4 +1,6 @@
 To build:
 ```sh
-cmake -DCMAKE-CXX-COMPILER=/home/cph/circle/circle .. 
+mkdir build & cd build
+export CXX=/home/cph/circle_tests/circle ..
+make -j32 
 ```
